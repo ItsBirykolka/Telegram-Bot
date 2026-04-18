@@ -34,7 +34,15 @@ def hourly_sender():
 t = threading.Thread(target=hourly_sender, daemon=True)
 t.start()
 
-offset = None
+def clear_old_updates():
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates"
+    resp = requests.get(url, params={"timeout": 0}).json()
+    updates = resp.get("result", [])
+    if updates:
+        return updates[-1]["update_id"] + 1
+    return None
+
+offset = clear_old_updates()
 while True:
     try:
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates"
@@ -51,7 +59,7 @@ while True:
             if text.startswith("/les"):
                 delete_message(chat_id, message_id)
                 reply = random.choice(messages)
-                send(reply, chat_id=chat_id)
+                send(reply)
                 print(f"Команда /les, отправлено: {reply}")
 
     except Exception as e:
