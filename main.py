@@ -21,4 +21,4 @@ while True:
     msg = random.choice(messages)
     send(msg)
     print("Отправлено:", msg)
-    time.sleep(5 * 60 * 60)
+    time.sleep(5)
