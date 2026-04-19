@@ -61,6 +61,10 @@ while True:
                 reply = random.choice(messages)
                 send(reply)
                 print(f"Команда /les, отправлено: {reply}")
+            elif "напоминание" in text.lower():
+                reply = random.choice(messages)
+                send(reply, chat_id)
+                print(f"Слово 'напоминание', отправлено: {reply}")
 
     except Exception as e:
         print("Ошибка polling:", e)
